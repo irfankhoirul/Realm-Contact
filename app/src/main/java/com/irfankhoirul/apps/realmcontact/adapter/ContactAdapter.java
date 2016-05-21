@@ -11,6 +11,9 @@ import com.irfankhoirul.apps.realmcontact.model.Contact;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Irfan Khoirul on 21/05/2016.
  */
@@ -47,14 +50,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     }
 
     public class ContactHolder extends RecyclerView.ViewHolder {
-        TextView tvInitial, tvName, tvPhone, tvEmail;
+        @BindView(R.id.tvInitial)
+        TextView tvInitial;
+        @BindView(R.id.tvName)
+        TextView tvName;
+        @BindView(R.id.tvPhone)
+        TextView tvPhone;
+        @BindView(R.id.tvEmail)
+        TextView tvEmail;
 
         public ContactHolder(View view) {
             super(view);
-            tvInitial = (TextView) view.findViewById(R.id.tvInitial);
-            tvName = (TextView) view.findViewById(R.id.tvName);
-            tvPhone = (TextView) view.findViewById(R.id.tvPhone);
-            tvEmail = (TextView) view.findViewById(R.id.tvEmail);
+            ButterKnife.bind(this, view);
         }
     }
 }

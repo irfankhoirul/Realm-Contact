@@ -16,6 +16,8 @@ import com.irfankhoirul.apps.realmcontact.model.Contact;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
@@ -23,13 +25,15 @@ import io.realm.RealmQuery;
 public class ContactListActivity extends AppCompatActivity {
 
     List<Contact> contacs = new ArrayList<>();
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        ButterKnife.bind(this);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
