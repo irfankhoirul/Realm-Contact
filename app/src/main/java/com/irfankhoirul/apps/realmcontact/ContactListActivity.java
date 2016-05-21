@@ -34,7 +34,7 @@ public class ContactListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ContactListActivity.this, AddContactActivity.class);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
 
@@ -55,4 +55,10 @@ public class ContactListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == 1)
+        recreate();
+    }
 }

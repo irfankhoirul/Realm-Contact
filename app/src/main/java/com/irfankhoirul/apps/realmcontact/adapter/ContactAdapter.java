@@ -34,8 +34,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     public void onBindViewHolder(ContactHolder holder, int position) {
         final Contact contact = contacts.get(position);
 
-//        char initial = contact.getName().charAt(0);
-//        holder.tvInitial.setText(initial);
+        char initial = contact.getName().charAt(0);
+        holder.tvInitial.setText(Character.toString(initial));
         holder.tvName.setText(contact.getName());
         holder.tvPhone.setText(contact.getPhone());
         holder.tvEmail.setText(contact.getEmail());
