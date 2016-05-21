@@ -6,53 +6,179 @@ import io.realm.RealmObject;
  * Created by Irfan Khoirul on 21/05/2016.
  */
 public class Contact extends RealmObject {
-    private static int GROUP_FRIEND = 1;
-    private static int GROUP_FAMILY = 1;
-    private static int GROUP_FAVORITE = 1;
-    private static int GROUP_EMERGENCY = 1;
-    private String name;
-    private String phone;
-    private String email;
-    private String address;
-    private int group;
+    private static String GROUP_FAMILY = "family";
+    private static String GROUP_BUSINESS = "business";
+    private static String GROUP_FRIEND = "friend";
+    private static String GROUP_EMERGENCY = "emergency";
+    private static String GROUP_OTHER = "other";
 
-    public String getName() {
-        return name;
+    private String prefix; //Pak
+    private String firstName; //Irfan
+    private String middleName; //Khoirul
+    private String lastName; //Muhlishin
+    private String mobilePhone;
+    private String homePhone;
+    private String workPhone;
+    private String personalEmail;
+    private String workEmail;
+    private String homeAddress;
+    private String workAddress;
+    private String companyName;
+    private String companyPosition;
+    private String website;
+    private String photoUri;
+    private String group;
+
+    public Contact() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPrefix() {
+        return prefix;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getEmail() {
-        return email;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public String getAddress() {
-        return address;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getLastName() {
+        return lastName;
     }
 
-    public int getGroup() {
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
+    }
+
+    public void setHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+    }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public void setWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+    }
+
+    public String getPersonalEmail() {
+        return personalEmail;
+    }
+
+    public void setPersonalEmail(String personalEmail) {
+        this.personalEmail = personalEmail;
+    }
+
+    public String getWorkEmail() {
+        return workEmail;
+    }
+
+    public void setWorkEmail(String workEmail) {
+        this.workEmail = workEmail;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public String getWorkAddress() {
+        return workAddress;
+    }
+
+    public void setWorkAddress(String workAddress) {
+        this.workAddress = workAddress;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyPosition() {
+        return companyPosition;
+    }
+
+    public void setCompanyPosition(String companyPosition) {
+        this.companyPosition = companyPosition;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPhotoUri() {
+        return photoUri;
+    }
+
+    public void setPhotoUri(String photoUri) {
+        this.photoUri = photoUri;
+    }
+
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "prefix='" + prefix + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", personalEmail='" + personalEmail + '\'' +
+                ", workEmail='" + workEmail + '\'' +
+                ", homeAddress='" + homeAddress + '\'' +
+                ", workAddress='" + workAddress + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyPosition='" + companyPosition + '\'' +
+                ", website='" + website + '\'' +
+                ", photoUri='" + photoUri + '\'' +
+                ", group='" + group + '\'' +
+                '}';
     }
 }

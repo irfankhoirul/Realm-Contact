@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--https://www.google.com/design/spec/style/color.html#color-color-palette-->
+    <color name="font_black_primary">#212121</color>
+    <color name="font_black_secondary">#757575</color>
+    <color name="font_black_disabled">#9E9E9E</color>
+    <color name="font_white_primary">@color/pure_white</color>
+    <color name="font_white_secondary">#B2B2B2</color>
 
     <!--red-->
     <color name="red_25">#FFF5F6</color>

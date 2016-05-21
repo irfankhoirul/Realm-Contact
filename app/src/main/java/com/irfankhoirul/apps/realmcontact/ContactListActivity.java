@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.irfankhoirul.apps.realmcontact.adapter.ContactAdapter;
 import com.irfankhoirul.apps.realmcontact.model.Contact;
 
@@ -22,9 +23,10 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 
-public class ContactListActivity extends AppCompatActivity {
+public class ContactListActivity extends AppCompatActivity implements ContactAdapter.itemInteractionListener {
 
     List<Contact> contacs = new ArrayList<>();
+
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
@@ -50,7 +52,7 @@ public class ContactListActivity extends AppCompatActivity {
         Log.v("ContacSize", String.valueOf(contacs.size()));
 
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
-        ContactAdapter mAdapter = new ContactAdapter(contacs);
+        ContactAdapter mAdapter = new ContactAdapter(contacs, ContactListActivity.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         assert rvContacts != null;
         rvContacts.setLayoutManager(mLayoutManager);
@@ -62,7 +64,43 @@ public class ContactListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == 1)
         recreate();
     }
+
+    @Override
+    public void onItemClickListener(int position) {
+        Contact tmp = new Contact();
+        tmp.setFirstName(contacs.get(position).getFirstName());
+        tmp.setMiddleName(contacs.get(position).getMiddleName());
+        tmp.setLastName(contacs.get(position).getLastName());
+
+        tmp.setMobilePhone(contacs.get(position).getMobilePhone());
+        tmp.setHomePhone(contacs.get(position).getHomePhone());
+        tmp.setWorkPhone(contacs.get(position).getWorkPhone());
+
+        tmp.setGroup(contacs.get(position).getGroup());
+
+        tmp.setPersonalEmail(contacs.get(position).getPersonalEmail());
+        tmp.setWorkEmail(contacs.get(position).getWorkEmail());
+
+        tmp.setHomeAddress(contacs.get(position).getHomeAddress());
+        tmp.setWorkAddress(contacs.get(position).getWorkAddress());
+
+        tmp.setCompanyName(contacs.get(position).getCompanyName());
+        tmp.setCompanyPosition(contacs.get(position).getCompanyPosition());
+
+        tmp.setWebsite(contacs.get(position).getWebsite());
+
+        Gson gson = new Gson();
+        String stringJson = gson.toJson(tmp, Contact.class);
+        Intent intent = new Intent(ContactListActivity.this, DetailContactActivity.class);
+        intent.putExtra("contact", stringJson);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLongClickListener(int position) {
+
+    }
+
 }
