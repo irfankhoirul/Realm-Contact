@@ -1,10 +1,12 @@
 package com.irfankhoirul.apps.realmcontact;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -178,17 +180,31 @@ public class DetailContactActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_delete) {
-            RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
-            Realm realm = Realm.getInstance(realmConfig);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Delete this contact?");
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    RealmConfiguration realmConfig = new RealmConfiguration.Builder(DetailContactActivity.this).build();
+                    Realm realm = Realm.getInstance(realmConfig);
 
-            RealmQuery<Contact> query = realm.where(Contact.class);
-            Contact result = query.findFirst();
+                    RealmQuery<Contact> query = realm.where(Contact.class);
+                    Contact result = query.findFirst();
 
-            realm.beginTransaction();
-            RealmObject.deleteFromRealm(result);
-            realm.commitTransaction();
+                    realm.beginTransaction();
+                    RealmObject.deleteFromRealm(result);
+                    realm.commitTransaction();
 
-            finish();
+                    finish();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            alertDialogBuilder.show();
 
         } else if (id == R.id.action_edit) {
             Intent intent = new Intent(DetailContactActivity.this, AddContactActivity.class);
