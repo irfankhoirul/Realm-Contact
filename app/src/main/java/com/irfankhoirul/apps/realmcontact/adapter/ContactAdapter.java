@@ -26,7 +26,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
 
     public interface itemInteractionListener {
         void onItemClickListener(int position);
-
         void onLongClickListener(int position);
     }
 

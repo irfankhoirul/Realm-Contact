@@ -132,6 +132,7 @@ public class AddContactActivity extends AppCompatActivity {
 
     private void saveContact() {
         Contact newContact = new Contact();
+        newContact.setPrefix(prefixs.get(spPrefix.getSelectedItemPosition()));
         newContact.setFirstName(etFirstName.getText().toString());
         newContact.setMiddleName(etMiddleName.getText().toString());
         newContact.setLastName(etLastName.getText().toString());

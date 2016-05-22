@@ -188,7 +188,10 @@ public class DetailContactActivity extends AppCompatActivity {
                     RealmConfiguration realmConfig = new RealmConfiguration.Builder(DetailContactActivity.this).build();
                     Realm realm = Realm.getInstance(realmConfig);
 
-                    RealmQuery<Contact> query = realm.where(Contact.class);
+                    RealmQuery<Contact> query = realm.where(Contact.class)
+                            .equalTo("firstName", contact.getFirstName())
+                            .equalTo("middleName", contact.getMiddleName())
+                            .equalTo("lastName", contact.getLastName());
                     Contact result = query.findFirst();
 
                     realm.beginTransaction();

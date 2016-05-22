@@ -6,16 +6,10 @@ import io.realm.RealmObject;
  * Created by Irfan Khoirul on 21/05/2016.
  */
 public class Contact extends RealmObject {
-    private static String GROUP_FAMILY = "family";
-    private static String GROUP_BUSINESS = "business";
-    private static String GROUP_FRIEND = "friend";
-    private static String GROUP_EMERGENCY = "emergency";
-    private static String GROUP_OTHER = "other";
-
-    private String prefix; //Pak
-    private String firstName; //Irfan
-    private String middleName; //Khoirul
-    private String lastName; //Muhlishin
+    private String prefix;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private String mobilePhone;
     private String homePhone;
     private String workPhone;
@@ -28,6 +22,10 @@ public class Contact extends RealmObject {
     private String website;
     private String photoUri;
     private String group;
+
+    // Constructor
+
+    //Getter & Setter
 
     public Contact() {
     }
