@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
 import com.irfankhoirul.apps.realmcontact.model.Contact;
 
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class AddContactActivity extends AppCompatActivity {
     private List<String> groups = new ArrayList<>();
     private List<String> prefixs = new ArrayList<>();
 
+    private Contact oldContact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +83,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        groups.add("no group");
         groups.add("Family");
         groups.add("Friend");
         groups.add("Business");
@@ -96,6 +100,12 @@ public class AddContactActivity extends AppCompatActivity {
         ArrayAdapter<String> prefixsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, prefixs);
         prefixsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPrefix.setAdapter(prefixsAdapter);
+
+        if (getIntent().getStringExtra("contact") != null) {
+            Gson gson = new Gson();
+            oldContact = gson.fromJson(getIntent().getStringExtra("contact"), Contact.class);
+            showContactData(oldContact);
+        }
 
     }
 
@@ -119,34 +129,97 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     private void saveContact() {
-        Contact contact = new Contact();
-        contact.setFirstName(etFirstName.getText().toString());
-        contact.setMiddleName(etMiddleName.getText().toString());
-        contact.setLastName(etLastName.getText().toString());
+        Contact newContact = new Contact();
+        newContact.setFirstName(etFirstName.getText().toString());
+        newContact.setMiddleName(etMiddleName.getText().toString());
+        newContact.setLastName(etLastName.getText().toString());
 
-        contact.setMobilePhone(etMobilePhone.getText().toString());
-        contact.setHomePhone(etHomePhone.getText().toString());
-        contact.setWorkPhone(etWorkPhone.getText().toString());
+        newContact.setMobilePhone(etMobilePhone.getText().toString());
+        newContact.setHomePhone(etHomePhone.getText().toString());
+        newContact.setWorkPhone(etWorkPhone.getText().toString());
 
-        contact.setGroup(groups.get(spGroup.getSelectedItemPosition()));
+        newContact.setGroup(groups.get(spGroup.getSelectedItemPosition()));
 
-        contact.setPersonalEmail(etPersonalEmail.getText().toString());
-        contact.setWorkEmail(etWorkEmail.getText().toString());
+        newContact.setPersonalEmail(etPersonalEmail.getText().toString());
+        newContact.setWorkEmail(etWorkEmail.getText().toString());
 
-        contact.setHomeAddress(etHomeAddress.getText().toString());
-        contact.setWorkAddress(etWorkAddress.getText().toString());
+        newContact.setHomeAddress(etHomeAddress.getText().toString());
+        newContact.setWorkAddress(etWorkAddress.getText().toString());
 
-        contact.setCompanyName(etCompanyName.getText().toString());
-        contact.setCompanyPosition(etCompanyPosition.getText().toString());
+        newContact.setCompanyName(etCompanyName.getText().toString());
+        newContact.setCompanyPosition(etCompanyPosition.getText().toString());
 
-        contact.setWebsite(etWebsite.getText().toString());
+        newContact.setWebsite(etWebsite.getText().toString());
 
+        if (getIntent().getStringExtra("contact") != null) {
+            updateContact(newContact, oldContact);
+        } else {
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder(AddContactActivity.this).build();
+            Realm realm = Realm.getInstance(realmConfig);
+            realm.beginTransaction();
+            realm.copyToRealm(newContact);
+            realm.commitTransaction();
+        }
+
+        finish();
+    }
+
+    private void showContactData(Contact contact) {
+        etFirstName.setText(contact.getFirstName());
+        etMiddleName.setText(contact.getMiddleName());
+        etLastName.setText(contact.getLastName());
+
+        etMobilePhone.setText(contact.getMobilePhone());
+        etHomePhone.setText(contact.getHomePhone());
+        etWorkPhone.setText(contact.getWorkPhone());
+
+        try {
+            spGroup.setSelection(groups.indexOf(contact.getGroup()));
+        } catch (Exception e) {
+            spGroup.setSelection(0);
+        }
+
+        etPersonalEmail.setText(contact.getPersonalEmail());
+        etWorkEmail.setText(contact.getWorkEmail());
+
+        etHomeAddress.setText(contact.getHomeAddress());
+        etWorkAddress.setText(contact.getWorkAddress());
+
+        etCompanyName.setText(contact.getCompanyName());
+        etCompanyPosition.setText(contact.getCompanyPosition());
+
+        etWebsite.setText(contact.getWebsite());
+    }
+
+    private void updateContact(Contact newContact, Contact oldContact) {
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(AddContactActivity.this).build();
         Realm realm = Realm.getInstance(realmConfig);
+        Contact contactToEdit = realm.where(Contact.class)
+                .equalTo("firstName", oldContact.getFirstName())
+                .equalTo("middleName", oldContact.getMiddleName())
+                .equalTo("lastName", oldContact.getLastName()).findFirst();
+
         realm.beginTransaction();
-        realm.copyToRealm(contact);
+        contactToEdit.setPrefix(newContact.getPrefix());
+        contactToEdit.setFirstName(newContact.getFirstName());
+        contactToEdit.setMiddleName(newContact.getMiddleName());
+        contactToEdit.setLastName(newContact.getLastName());
+        contactToEdit.setMobilePhone(newContact.getMobilePhone());
+        contactToEdit.setHomePhone(newContact.getHomePhone());
+        contactToEdit.setWorkPhone(newContact.getWorkPhone());
+        contactToEdit.setPersonalEmail(newContact.getWorkEmail());
+        contactToEdit.setWorkEmail(newContact.getWorkEmail());
+        contactToEdit.setHomeAddress(newContact.getHomeAddress());
+        contactToEdit.setWorkAddress(newContact.getWorkAddress());
+        contactToEdit.setCompanyName(newContact.getCompanyName());
+        contactToEdit.setCompanyPosition(newContact.getCompanyPosition());
+        contactToEdit.setWebsite(newContact.getWebsite());
+        contactToEdit.setPhotoUri(newContact.getPhotoUri());
+        contactToEdit.setWebsite(newContact.getWebsite());
+
         realm.commitTransaction();
 
         finish();
     }
+
 }

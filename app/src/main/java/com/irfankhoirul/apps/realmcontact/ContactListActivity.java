@@ -95,7 +95,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactAda
         String stringJson = gson.toJson(tmp, Contact.class);
         Intent intent = new Intent(ContactListActivity.this, DetailContactActivity.class);
         intent.putExtra("contact", stringJson);
-        startActivity(intent);
+        startActivityForResult(intent, 10);
     }
 
     @Override
